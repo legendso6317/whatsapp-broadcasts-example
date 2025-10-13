@@ -11,7 +11,6 @@ Example Next.js app demonstrating Kapso's Broadcasts API for WhatsApp mass messa
 - **Real-time progress tracking** - Auto-polling during broadcast send
 - **Recipient-level analytics** - Per-phone delivery status with pagination
 - **Response rate metrics** - Track engagement and campaign performance
-- **Broadcast history** - View and revisit past campaigns
 
 ## Quick start
 
