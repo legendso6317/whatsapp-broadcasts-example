@@ -77,7 +77,6 @@ export const kapsoApi = {
       }),
     get: (broadcastId: string) =>
       kapsoFetch<ApiResponse<WhatsappBroadcast>>(`/whatsapp_broadcasts/${broadcastId}`),
-    list: () => kapsoFetch<ApiListResponse<WhatsappBroadcast>>('/whatsapp_broadcasts'),
     addRecipients: (broadcastId: string, data: AddRecipientsRequest) =>
       kapsoFetch<ApiResponse<RecipientBatchResponse>, AddRecipientsRequest>(
         `/whatsapp_broadcasts/${broadcastId}/recipients`,

@@ -41,12 +41,8 @@ export default function Home() {
   const [recipientsMeta, setRecipientsMeta] = useState<PaginationMeta | null>(null);
   const [recipientsPage, setRecipientsPage] = useState<number>(1);
 
-  // Broadcasts history
-  const [broadcasts, setBroadcasts] = useState<WhatsappBroadcast[]>([]);
-
   useEffect(() => {
     fetchTemplates();
-    fetchBroadcasts();
   }, []);
 
   // Auto-generate broadcast name when template is selected
@@ -100,18 +96,6 @@ export default function Home() {
       setError(err instanceof Error ? err.message : 'Failed to load templates');
     } finally {
       setLoading(false);
-    }
-  }
-
-  async function fetchBroadcasts() {
-    try {
-      const response = await fetch('/api/broadcasts');
-      if (response.ok) {
-        const data = await response.json();
-        setBroadcasts(data.data || []);
-      }
-    } catch (err) {
-      console.error('Error fetching broadcasts:', err);
     }
   }
 
@@ -191,7 +175,6 @@ export default function Home() {
 
       const data = await response.json();
       setCurrentBroadcast(data.data);
-      await fetchBroadcasts();
       setCurrentStep(3); // Move to recipients step
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create broadcast');
@@ -803,47 +786,6 @@ export default function Home() {
               </Card>
             )}
           </div>
-        )}
-
-        {/* Broadcast History */}
-        {broadcasts.length > 0 && (
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Broadcast history</CardTitle>
-              <CardDescription>View and manage past campaigns</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {broadcasts.map((broadcast) => (
-                  <div
-                    key={broadcast.id}
-                    className="p-4 border rounded-lg hover:bg-muted cursor-pointer transition-colors"
-                    onClick={() => {
-                      setCurrentBroadcast(broadcast);
-                      setCurrentStep(5);
-                    }}
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="font-semibold">{broadcast.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Recipients: {broadcast.total_recipients} | Sent: {broadcast.sent_count}
-                        </p>
-                      </div>
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        broadcast.status === 'completed' ? 'bg-green-100 text-green-800' :
-                        broadcast.status === 'sending' ? 'bg-blue-100 text-blue-800' :
-                        broadcast.status === 'failed' ? 'bg-red-100 text-red-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {broadcast.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         )}
       </div>
     </div>
