@@ -41,6 +41,133 @@ export default function Home() {
   const [recipientsMeta, setRecipientsMeta] = useState<PaginationMeta | null>(null);
   const [recipientsPage, setRecipientsPage] = useState<number>(1);
 
+  // Helper function to extract parameter info (name and example)
+  function getTemplateParameterInfo(template: Template): Array<{ name: string; example: string }> {
+    if (!template.components) return [];
+
+    const componentsArray = (template.components as any).components || template.components;
+    if (!Array.isArray(componentsArray)) return [];
+
+    const params: Array<{ name: string; example: string }> = [];
+    let positionalIndex = 1;
+
+    for (const component of componentsArray) {
+      if (component.type !== 'BODY' && component.type !== 'HEADER') continue;
+
+      // Handle NAMED parameters
+      if (component.example?.body_text_named_params) {
+        for (const param of component.example.body_text_named_params) {
+          params.push({ name: param.param_name, example: param.example });
+        }
+      } else if (component.example?.header_text_named_params) {
+        for (const param of component.example.header_text_named_params) {
+          params.push({ name: param.param_name, example: param.example });
+        }
+      }
+      // Handle POSITIONAL parameters
+      else if (component.example?.body_text && component.example.body_text.length > 0) {
+        const positionalParams = component.example.body_text[0] || [];
+        for (const example of positionalParams) {
+          params.push({ name: `param${positionalIndex}`, example });
+          positionalIndex++;
+        }
+      }
+    }
+
+    return params;
+  }
+
+  // Helper function to extract parameter examples from template
+  function getTemplateParameterExamples(template: Template): string[] {
+    if (!template.components) {
+      return [];
+    }
+
+    // Handle nested components structure: components.components
+    const componentsArray = (template.components as any).components || template.components;
+
+    if (!Array.isArray(componentsArray)) {
+      return [];
+    }
+
+    const examples: string[] = [];
+
+    for (const component of componentsArray) {
+      // Skip non-BODY and non-HEADER components
+      if (component.type !== 'BODY' && component.type !== 'HEADER') {
+        continue;
+      }
+
+      // Handle NAMED parameter format (body_text_named_params)
+      if (component.example?.body_text_named_params) {
+        const namedParams = component.example.body_text_named_params;
+        for (const param of namedParams) {
+          examples.push(param.example);
+        }
+      }
+      // Handle NAMED parameter format for headers (header_text_named_params)
+      else if (component.example?.header_text_named_params) {
+        const namedParams = component.example.header_text_named_params;
+        for (const param of namedParams) {
+          examples.push(param.example);
+        }
+      }
+      // Handle POSITIONAL parameter format (body_text 2D array)
+      else if (component.example?.body_text && component.example.body_text.length > 0) {
+        // body_text is a 2D array, get the first example row
+        const positionalParams = component.example.body_text[0] || [];
+        examples.push(...positionalParams);
+      }
+    }
+
+    return examples;
+  }
+
+  // Helper function to check if template uses named parameters
+  function isNamedParameterTemplate(template: Template): boolean {
+    const metadata = template.metadata as any;
+    return metadata?.whatsapp_data?.parameter_format === 'NAMED';
+  }
+
+  // Helper function to convert array params to named object
+  function convertToTemplateParameters(template: Template, params: string[]): string[] | Record<string, string> {
+    if (!isNamedParameterTemplate(template)) {
+      // Positional parameters - return as array
+      return params;
+    }
+
+    // Named parameters - convert to object
+    const paramInfo = getTemplateParameterInfo(template);
+    const namedParams: Record<string, string> = {};
+
+    paramInfo.forEach((info, index) => {
+      if (index < params.length) {
+        namedParams[info.name] = params[index];
+      }
+    });
+
+    return namedParams;
+  }
+
+  // Helper function to generate CSV example based on template
+  function generateCSVExample(template: Template): string {
+    const examples = getTemplateParameterExamples(template);
+    const paramCount = template.parameter_count || 0;
+
+    // Generate header row
+    const headers = ['phone'];
+    for (let i = 1; i <= paramCount; i++) {
+      headers.push(`param${i}`);
+    }
+
+    // Generate example rows using template examples or defaults
+    const exampleValues = examples.length > 0 ? examples : Array(paramCount).fill('value');
+    const row1 = ['+15551234567', ...exampleValues];
+    const row2 = ['+15559876543', ...exampleValues];
+
+    return `${headers.join(',')}\n${row1.join(',')}\n${row2.join(',')}`;
+  }
+
   useEffect(() => {
     fetchTemplates();
   }, []);
@@ -189,6 +316,11 @@ export default function Home() {
       return;
     }
 
+    if (!selectedTemplate) {
+      setError('Template information not available');
+      return;
+    }
+
     if (parsedRows.length === 0) {
       setError('Please upload a CSV file with recipients');
       return;
@@ -217,7 +349,9 @@ export default function Home() {
 
         const recipients = batch.map(row => ({
           phone_number: row.phoneNumber,
-          template_parameters: row.params.length > 0 ? row.params : undefined,
+          template_parameters: row.params.length > 0
+            ? convertToTemplateParameters(selectedTemplate, row.params)
+            : undefined,
         }));
 
         const response = await fetch(`/api/broadcasts/${currentBroadcast.id}/recipients`, {
@@ -334,7 +468,7 @@ export default function Home() {
     }
 
     // Generate example CSV based on template
-    const exampleCSV = `phone,param1,param2\n+15551234567,John,Order123\n+15559876543,Jane,Order456`;
+    const exampleCSV = generateCSVExample(selectedTemplate);
 
     const blob = new Blob([exampleCSV], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -402,7 +536,7 @@ export default function Home() {
                   </Select>
 
                   {selectedTemplate && (
-                    <div className="p-4 bg-muted rounded-lg space-y-2">
+                    <div className="p-4 bg-muted rounded-lg space-y-3">
                       <div className="flex justify-between">
                         <span className="font-semibold">Name:</span>
                         <span>{selectedTemplate.name}</span>
@@ -419,6 +553,33 @@ export default function Home() {
                         <span className="font-semibold">Parameters:</span>
                         <span>{selectedTemplate.parameter_count}</span>
                       </div>
+                      {selectedTemplate.content && (
+                        <div className="pt-2 border-t">
+                          <p className="font-semibold mb-1">Template:</p>
+                          <p className="text-sm whitespace-pre-wrap">{selectedTemplate.content}</p>
+                        </div>
+                      )}
+                      {selectedTemplate.parameter_count > 0 && (
+                        <div className="pt-2 border-t">
+                          <p className="font-semibold mb-1">Required parameters: {selectedTemplate.parameter_count}</p>
+                          <div className="text-sm bg-background p-2 rounded font-mono">
+                            {getTemplateParameterInfo(selectedTemplate).length > 0 ? (
+                              <>
+                                <p className="text-muted-foreground mb-1">Example values:</p>
+                                {getTemplateParameterInfo(selectedTemplate).map((param, i) => (
+                                  <div key={i}>
+                                    {param.name}: <span className="text-muted-foreground">{param.example}</span>
+                                  </div>
+                                ))}
+                              </>
+                            ) : (
+                              <div className="text-muted-foreground">
+                                No examples available - you'll need to provide {selectedTemplate.parameter_count} parameter(s)
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -516,7 +677,7 @@ export default function Home() {
                 <label className="text-sm font-medium">Or paste CSV content</label>
                 <Textarea
                   rows={8}
-                  placeholder="+15551234567,John,Doe&#10;+15559876543,Jane,Smith"
+                  placeholder={selectedTemplate ? generateCSVExample(selectedTemplate) : "phone,param1,param2\n+15551234567,John,Order123\n+15559876543,Jane,Order456"}
                   value={csvText}
                   onChange={handleCsvTextChange}
                   className="font-mono text-sm"
