@@ -38,19 +38,19 @@ Open [http://localhost:4000](http://localhost:4000)
 ### 1. Get Kapso API key
 
 1. Sign up at [app.kapso.ai](https://app.kapso.ai)
-2. Go to Settings → API Keys
+2. Go to Sidebar → API Keys
 3. Create a new API key
 4. Copy the key to your `.env` file
 
 ### 2. Connect WhatsApp
 
-1. In your Kapso dashboard, connect a WhatsApp Business account
-2. Create or select a production WhatsApp config
+1. In your Kapso dashboard, go to Connected numbers and connect a WhatsApp Business account
+2. Copy the WhatsApp config UUID
 3. Copy the config UUID to your `.env` file
 
 ### 3. Create templates
 
-1. In Kapso dashboard, create WhatsApp message templates
+1. In Kapso dashboard (or directly in Meta), create WhatsApp message templates
 2. Get them approved by Meta
 3. Templates will appear in the app automatically
 
