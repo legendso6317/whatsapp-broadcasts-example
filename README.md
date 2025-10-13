@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kapso WhatsApp broadcasts example
 
-## Getting Started
+Example Next.js app demonstrating Kapso's Broadcasts API for WhatsApp mass messaging campaigns.
 
-First, run the development server:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgokapso%2Fwhatsapp-broadcasts-example&env=KAPSO_API_KEY,WHATSAPP_CONFIG_ID,NEXT_PUBLIC_WHATSAPP_CONFIG_ID&envDescription=Required%20Kapso%20credentials&envLink=https%3A%2F%2Fdocs.kapso.ai)
+
+## Features
+
+- **5-step wizard UI** - Clean, intuitive stepper interface
+- **Batch recipient upload** - Add up to 1,000 recipients per request via CSV
+- **Real-time progress tracking** - Auto-polling during broadcast send
+- **Recipient-level analytics** - Per-phone delivery status with pagination
+- **Response rate metrics** - Track engagement and campaign performance
+- **Broadcast history** - View and revisit past campaigns
+
+## Quick start
 
 ```bash
+# Clone the repository
+git clone https://github.com/gokapso/whatsapp-broadcasts-example.git
+cd whatsapp-broadcasts-example
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Add your Kapso API key and WhatsApp config ID
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:4000](http://localhost:4000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Get Kapso API key
 
-## Learn More
+1. Sign up at [app.kapso.ai](https://app.kapso.ai)
+2. Go to Settings → API Keys
+3. Create a new API key
+4. Copy the key to your `.env` file
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Connect WhatsApp
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. In your Kapso dashboard, connect a WhatsApp Business account
+2. Create or select a production WhatsApp config
+3. Copy the config UUID to your `.env` file
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Create templates
 
-## Deploy on Vercel
+1. In Kapso dashboard, create WhatsApp message templates
+2. Get them approved by Meta
+3. Templates will appear in the app automatically
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## CSV format
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Upload a CSV file with phone numbers and template parameters:
+
+```csv
+phone,param1,param2
++15551234567,John,Order123
++15559876543,Jane,Order456
+```
+
+- **First column**: Phone number (E.164 format with + prefix)
+- **Remaining columns**: Template parameters in order
+
+## API endpoints
+
+This app uses the following Kapso API endpoints:
+
+- `GET /whatsapp_templates` - Fetch approved templates
+- `POST /whatsapp_broadcasts` - Create draft broadcast
+- `POST /whatsapp_broadcasts/:id/recipients` - Add recipients
+- `POST /whatsapp_broadcasts/:id/send` - Send broadcast
+- `GET /whatsapp_broadcasts/:id` - Get broadcast status
+- `GET /whatsapp_broadcasts/:id/recipients` - List recipients
+
+## Tech stack
+
+- **Next.js 15** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS v4** - Styling
+- **shadcn/ui** - UI components
+- **Kapso API** - WhatsApp broadcasts
+
+## Project structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── broadcasts/          # Broadcast API routes
+│   │   └── templates/           # Template API routes
+│   └── page.tsx                 # Main stepper UI
+├── components/ui/               # shadcn components
+├── lib/
+│   ├── kapso-api.ts            # Kapso API client
+│   ├── csv-parser.ts           # CSV parsing utilities
+│   └── utils.ts                # Utility functions
+└── types/index.ts              # TypeScript types
+```
+
+## Documentation
+
+- [Create Broadcast API](https://docs.kapso.ai/api-reference/whatsapp-broadcasts/create-broadcast)
+- [List WhatsApp Templates API](https://docs.kapso.ai/api-reference/whatsapp-templates/list-whatsapp-templates)
+- [Full API Reference](https://docs.kapso.ai/api-reference)
+
+## License
+
+MIT

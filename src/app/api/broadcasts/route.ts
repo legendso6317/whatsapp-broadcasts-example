@@ -1,0 +1,48 @@
+import { NextResponse } from 'next/server';
+import { kapsoApi } from '@/lib/kapso-api';
+import type { CreateBroadcastRequest } from '@/types';
+
+export async function POST(request: Request) {
+  try {
+    const body = (await request.json()) as CreateBroadcastRequest;
+
+    if (!body.whatsapp_broadcast) {
+      return NextResponse.json(
+        { error: 'Missing required field: whatsapp_broadcast' },
+        { status: 400 }
+      );
+    }
+
+    const { name, whatsapp_config_id, whatsapp_template_id } = body.whatsapp_broadcast;
+
+    if (!name || !whatsapp_config_id || !whatsapp_template_id) {
+      return NextResponse.json(
+        { error: 'Missing required fields: name, whatsapp_config_id, whatsapp_template_id' },
+        { status: 400 }
+      );
+    }
+
+    const result = await kapsoApi.broadcasts.create(body);
+
+    return NextResponse.json(result, { status: 201 });
+  } catch (error) {
+    console.error('Error creating broadcast:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to create broadcast' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const result = await kapsoApi.broadcasts.list();
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('Error fetching broadcasts:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to fetch broadcasts' },
+      { status: 500 }
+    );
+  }
+}
