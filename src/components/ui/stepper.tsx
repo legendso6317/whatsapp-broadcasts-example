@@ -51,7 +51,7 @@ export function Stepper({ steps, currentStep, onStepClick }: StepperProps) {
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground mt-1 min-w-[100px]">
                       {step.description}
                     </p>
                   )}
